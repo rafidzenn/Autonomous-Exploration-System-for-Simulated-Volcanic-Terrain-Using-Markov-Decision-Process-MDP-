@@ -1,5 +1,4 @@
 numpy
 matplotlib
-gradio==4.44.1
+gradio==5.23.0
 pillow
-pyaudiooop-lts
