@@ -23,6 +23,7 @@ jobs:
         run: |
           git config --global user.email "deploy@github.com"
           git config --global user.name "GitHub Actions"
+          git config --global init.defaultBranch main
           cp -r . /tmp/hf-deploy
           cd /tmp/hf-deploy
           rm -rf others/ .git .github
