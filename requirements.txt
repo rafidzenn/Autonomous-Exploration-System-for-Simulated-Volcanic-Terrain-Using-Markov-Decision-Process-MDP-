@@ -1,26 +1,10 @@
-# Computer Vision & Data Processing
-opencv-python
 numpy==1.26.4
-scipy==1.13.1
-
-# Visualization
 matplotlib
-
-# Machine Learning & Reinforcement Learning
-tensorflow
-torch
+opencv-python
 scikit-learn
-
-# Path Planning & Navigation
 networkx
 shapely
-
-# GIS & Mapping
 geopandas
-
-# Simulation
 gymnasium
-
-# Miscellaneous
 requests
 gradio
