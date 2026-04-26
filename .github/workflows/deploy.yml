@@ -27,6 +27,21 @@ jobs:
           cp -r . /tmp/hf-deploy
           cd /tmp/hf-deploy
           rm -rf others/ .git .github
+          cp main.py app.py
+          cat > README.md << 'EOF'
+          ---
+          title: Autonomous Volcanic Terrain Explorer
+          emoji: 🌋
+          colorFrom: red
+          colorTo: orange
+          sdk: gradio
+          sdk_version: "4.0.0"
+          app_file: app.py
+          pinned: false
+          ---
+          # Autonomous Exploration System for Simulated Volcanic Terrain
+          Autonomous robot exploration using Markov Decision Process (MDP).
+          EOF
 
       - name: Push to HuggingFace Space
         env:
