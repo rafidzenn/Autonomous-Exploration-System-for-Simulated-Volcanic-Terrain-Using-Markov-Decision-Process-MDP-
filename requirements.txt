@@ -1,7 +1,9 @@
 # Computer Vision & Data Processing
 opencv-python
-numpy
-scipy
+numpy==1.26.4
+scipy==1.13.1
+
+# Visualization
 matplotlib
 
 # Machine Learning & Reinforcement Learning
@@ -16,8 +18,9 @@ shapely
 # GIS & Mapping
 geopandas
 
+# Simulation
+gymnasium
+
 # Miscellaneous
 requests
-
-# Simulation
-openai-gym
+gradio
