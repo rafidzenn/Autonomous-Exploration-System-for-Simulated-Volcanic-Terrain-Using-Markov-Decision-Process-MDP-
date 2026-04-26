@@ -11,7 +11,8 @@ GRID_SIZE = 5
 NUM_LAVA = 3
 NUM_GAS = 2
 NUM_CRIERS = 2
-MAX_EPISODES = 350
+MAX_EPISODES = 100
+MAX_STEPS = 100
 ALPHA = 0.1
 GAMMA = 0.9
 EPSILON = 1.8
@@ -70,8 +71,10 @@ def q_learning():
         state = (random.randint(0, GRID_SIZE-1), random.randint(0, GRID_SIZE-1))
         done = False
         total_reward = 0
-        while not done:
-            if random.uniform(0,1) < EPSILON:
+        steps = 0
+        while not done and steps < MAX_STEPS:
+            steps += 1
+            if random.uniform(0, 1) < EPSILON:
                 action = random.choice(get_possible_actions())
             else:
                 action = get_possible_actions()[np.argmax(Q_table[state[0], state[1]])]
@@ -81,8 +84,8 @@ def q_learning():
             action_index = get_possible_actions().index(action)
             best_next = np.max(Q_table[next_state[0], next_state[1]])
             Q_table[state[0], state[1], action_index] = \
-                (1-ALPHA)*Q_table[state[0], state[1], action_index] + \
-                ALPHA*(reward + GAMMA*best_next)
+                (1 - ALPHA) * Q_table[state[0], state[1], action_index] + \
+                ALPHA * (reward + GAMMA * best_next)
             state = next_state
             if state == (GRID_SIZE-1, GRID_SIZE-1):
                 done = True
@@ -95,8 +98,8 @@ def q_learning():
 
 def run_simulation():
     total_rewards = q_learning()
-    path = [(0,0)]
-    state = (0,0)
+    path = [(0, 0)]
+    state = (0, 0)
     for _ in range(50):
         action_idx = np.argmax(Q_table[state[0], state[1]])
         action = get_possible_actions()[action_idx]
@@ -105,21 +108,25 @@ def run_simulation():
         state = next_state
         if state == (GRID_SIZE-1, GRID_SIZE-1):
             break
+
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
     cmap = plt.cm.get_cmap('viridis', 4)
     im = axes[0].imshow(grid.T, cmap=cmap, vmin=0, vmax=3)
     xs, ys = zip(*path)
     axes[0].plot(ys, xs, 'r-o', linewidth=2, markersize=8)
     axes[0].plot(ys[0], xs[0], 'go', markersize=12, label='Start')
     axes[0].plot(ys[-1], xs[-1], 'b*', markersize=15, label='End')
-    plt.colorbar(im, ax=axes[0], ticks=[0,1,2,3])
+    plt.colorbar(im, ax=axes[0], ticks=[0, 1, 2, 3])
     axes[0].set_title("Agent's Navigation Path")
     axes[0].legend()
+
     axes[1].plot(total_rewards)
     axes[1].set_xlabel('Episode')
     axes[1].set_ylabel('Total Reward')
     axes[1].set_title('Training Rewards per Episode')
     axes[1].grid(True)
+
     plt.tight_layout()
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100)
