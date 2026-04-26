@@ -19,9 +19,21 @@ jobs:
       - name: Install Git LFS
         run: git lfs install
 
+      - name: Prepare clean copy for HuggingFace
+        run: |
+          git config --global user.email "deploy@github.com"
+          git config --global user.name "GitHub Actions"
+          cp -r . /tmp/hf-deploy
+          cd /tmp/hf-deploy
+          rm -rf others/ .git .github
+
       - name: Push to HuggingFace Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          cd /tmp/hf-deploy
+          git init
+          git add .
+          git commit -m "Deploy from GitHub"
           git remote add hf https://rafidzenn:$HF_TOKEN@huggingface.co/spaces/rafidzenn/Autonomous-Volcanic-Terrain-Explorer
           git push hf main --force
