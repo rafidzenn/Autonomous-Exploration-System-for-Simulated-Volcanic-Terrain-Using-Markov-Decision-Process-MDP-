@@ -3,7 +3,7 @@
 ## 🛠 Technologies & Tools  
 # Simulation & Robotics
 ros
-gazebo
+
 openai-gym
 
 # Computer Vision & Data Processing
