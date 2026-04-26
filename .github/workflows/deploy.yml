@@ -26,8 +26,13 @@ jobs:
           git config --global init.defaultBranch main
           cp -r . /tmp/hf-deploy
           cd /tmp/hf-deploy
-          rm -rf others/ .git .github
-          cp main.py app.py
+          rm -rf others/ .git .github main.py
+          cat > requirements.txt << 'EOF'
+          numpy
+          matplotlib
+          gradio
+          pillow
+          EOF
           cat > README.md << 'EOF'
           ---
           title: Autonomous Volcanic Terrain Explorer
@@ -39,8 +44,6 @@ jobs:
           app_file: app.py
           pinned: false
           ---
-          # Autonomous Exploration System for Simulated Volcanic Terrain
-          Autonomous robot exploration using Markov Decision Process (MDP).
           EOF
 
       - name: Push to HuggingFace Space
