@@ -33,7 +33,7 @@ jobs:
           title: Autonomous Volcanic Terrain Explorer
           emoji: 🌋
           colorFrom: red
-          colorTo: orange
+          colorTo: yellow
           sdk: gradio
           sdk_version: "4.0.0"
           app_file: app.py
